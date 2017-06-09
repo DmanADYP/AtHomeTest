@@ -8,10 +8,15 @@ import { HttpService } from "app/Service/http.service";
 @Component({
     selector:'hello-app',
     template:`<h1>hello, {{name}}</h1>
-    say hello to <input [value]="name"
+    say hello to
+     <input [value]="name"
     (input)="name =$event.target.value">
     {{quoteOfTheDay.title}}
     <button (click)="getQuote()"> get a quote</button>
+       <tr *ngFor="let hero of heroes">
+                <td>{{hero.name}}</td>
+            </tr>
+    
 {{user.title}}
     x
     `,
@@ -23,7 +28,7 @@ export class HelloComponent implements OnInit{
     }
     name: string = "world";
 quoteOfTheDay:string="";
-user:User[];
+user=new User('');
 heroes: any[];
 constructor(private httpservice: HttpService,private http:Http){
     

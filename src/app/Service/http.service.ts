@@ -9,7 +9,7 @@ export class HttpService{
     constructor(private http: Http) {
         
     }
-getQuote():Observable<User[]>{
+getQuote():Observable<User>{
 
 return this.http.get('http://localhost:3000/posts/1')
  .map(result => result.json())
