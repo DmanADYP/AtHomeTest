@@ -2,12 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { User } from "app/model/report.model";
 import { FormControl,Validators,FormGroup } from "@angular/forms";
 import { HttpService } from "app/Service/http.service";
+import { BE } from "app/model/BE.model";
 
 @Component({
     selector:'my-login',
     template:`
-      <form (ngSubmit)="submitBE()">
-            <div class="form-group">
+
+      <form (ngSubmit)="submitBE()" >
+            <div class="form-group" *ngFor="let model of models;">
                 
                 <br />
                 <!--new code-->
@@ -21,8 +23,8 @@ import { HttpService } from "app/Service/http.service";
               
 
                 <br />
-                <button *ngIf="!editing" type="submit" class="btn btn-primary btn-block">Add</button>
-                <button *ngIf="editing" type="submit" class="btn btn-warning btn-block">Update</button>
+                <button (click)="Submit()"*ngIf="!editing" type="submit" class="btn btn-primary btn-block">Add</button>
+                <button (click) ="Update()" *ngIf="editing" type="submit" class="btn btn-warning btn-block">Update</button>
             </div>
         </form>
 
@@ -31,15 +33,24 @@ import { HttpService } from "app/Service/http.service";
          
 
 })export class LoginComponent implements OnInit{
-   public  model= new User('');
+   public  models:BE[];
    user: FormGroup;
+   private editing= false;
   constructor(private service: HttpService) {
-    this.service.getQuote().subscribe(
-        x=> {this.model = x,
-        alert(this.model.id);}
+    this.service.getOneBE('2').subscribe(
+        x=> {this.models = x,
+        console.log(this.models);
+    
+}
     );
+   
   }
-  
+  Submit(){
+ this.service.addBE(this.models[0]).subscribe();
+  }
+  Update(){
+      this.service.updateBE(this.models[0],'2').subscribe(result=> {})
+  }
   ngOnInit() {
     this.user = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(2)]),

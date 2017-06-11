@@ -24,7 +24,7 @@ import { HttpService } from "app/Service/http.service";
 })
 export class HelloComponent implements OnInit{
     ngOnInit(): void {
-      this.getQuote();
+   
     }
     name: string = "world";
 quoteOfTheDay:string="";
@@ -34,29 +34,7 @@ constructor(private httpservice: HttpService,private http:Http){
     
 }
 
-getQuote(){
-    this.httpservice.getQuote()
-    .subscribe(
-            data =>{ this.user = data,
-                console.log(data),
-                console.log(this.user);
-            }
-    );
-   
-}
-/*
-getQuote(){
 
- this.http.get('http://localhost:3000/posts/1')
- .map(result => result.json())
- //.catch(this.getError);
-.subscribe(
-            data =>{ this.user = data,
-                console.log(data),
-                console.log(this.user);
-            }
-        );
-}*/
 
 }
 
